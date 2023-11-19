@@ -2,18 +2,17 @@ package ru.netology.javaqa.javaqamvn.services;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import ru.netology.javaqa.javaqamvn.services.Radio;
 
 public class RadioTest {
 
     @Test
     public void shouldIncreaseVolume() {
         Radio radio = new Radio();
-        radio.currentVolume = 50;
+        radio.setCurrentVolume(50);
         radio.increaseVolume();
 
         int expectedVolume = 51;
-        int actualVolume = radio.currentVolume;
+        int actualVolume = radio.getCurrentVolume();
 
         Assertions.assertEquals(expectedVolume, actualVolume);
     }
@@ -21,11 +20,11 @@ public class RadioTest {
     @Test
     public void shouldDecreaseVolume() {
         Radio radio = new Radio();
-        radio.currentVolume = 100;
+        radio.setCurrentVolume(100);
         radio.decreaseVolume();
 
         int expectedVolume = 99;
-        int actualVolume = radio.currentVolume;
+        int actualVolume = radio.getCurrentVolume();
 
         Assertions.assertEquals(expectedVolume, actualVolume);
     }
@@ -33,11 +32,11 @@ public class RadioTest {
     @Test
     public void shouldNotIncreaseVolumeAboveMax() {
         Radio radio = new Radio();
-        radio.currentVolume = 100;
+        radio.setCurrentVolume(100);
         radio.increaseVolume();
 
         int expectedVolume = 100;
-        int actualVolume = radio.currentVolume;
+        int actualVolume = radio.getCurrentVolume();
 
         Assertions.assertEquals(expectedVolume, actualVolume);
     }
@@ -45,11 +44,11 @@ public class RadioTest {
     @Test
     public void shouldNotDecreaseVolumeBelowMin() {
         Radio radio = new Radio();
-        radio.currentVolume = 0;
+        radio.setCurrentVolume(0);
         radio.decreaseVolume();
 
         int expectedVolume = 0;
-        int actualVolume = radio.currentVolume;
+        int actualVolume = radio.getCurrentStation();
 
         Assertions.assertEquals(expectedVolume, actualVolume);
     }
@@ -61,7 +60,7 @@ public class RadioTest {
         radio.nextStation();
 
         int expectedStation = 2;
-        int actualStation = radio.currentStation;
+        int actualStation = radio.getCurrentStation();
 
         Assertions.assertEquals(expectedStation, actualStation);
     }
@@ -73,7 +72,7 @@ public class RadioTest {
         radio.prevStation();
 
         int expectedStation = 0;
-        int actualStation = radio.currentStation;
+        int actualStation = radio.getCurrentStation();
 
         Assertions.assertEquals(expectedStation, actualStation);
     }
@@ -85,7 +84,7 @@ public class RadioTest {
         radio.nextStation();
 
         int expectedStation = 0;
-        int actualStation = radio.currentStation;
+        int actualStation = radio.getCurrentStation();
 
         Assertions.assertEquals(expectedStation, actualStation);
     }
@@ -97,7 +96,7 @@ public class RadioTest {
         radio.prevStation();
 
         int expectedStation = 9;
-        int actualStation = radio.currentStation;
+        int actualStation = radio.getCurrentStation();
 
         Assertions.assertEquals(expectedStation, actualStation);
     }
@@ -108,7 +107,7 @@ public class RadioTest {
         radio.setCurrentStation(10);
 
         int expectedStation = 0;
-        int actualStation = radio.currentStation;
+        int actualStation = radio.getCurrentStation();
 
         Assertions.assertEquals(expectedStation, actualStation);
     }
@@ -119,8 +118,30 @@ public class RadioTest {
         radio.setCurrentStation(-1);
 
         int expectedStation = 0;
-        int actualStation = radio.currentStation;
+        int actualStation = radio.getCurrentStation();
 
         Assertions.assertEquals(expectedStation, actualStation);
+    }
+
+    @Test
+    public void shouldNotSetVolumeAboveMax() {
+        Radio radio = new Radio();
+        radio.setCurrentVolume(101);
+
+        int expectedVolume = 0;
+        int actualVolume = radio.getCurrentVolume();
+
+        Assertions.assertEquals(expectedVolume, actualVolume);
+    }
+
+    @Test
+    public void shouldNotSetVolumeBelowMin() {
+        Radio radio = new Radio();
+        radio.setCurrentVolume(-1);
+
+        int expectedVolume = 0;
+        int actualVolume = radio.getCurrentVolume();
+
+        Assertions.assertEquals(expectedVolume, actualVolume);
     }
 }
