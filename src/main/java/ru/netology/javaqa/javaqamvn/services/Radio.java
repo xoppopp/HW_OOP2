@@ -2,14 +2,28 @@ package ru.netology.javaqa.javaqamvn.services;
 
 public class Radio {
 
+
+    private int maxStation;
     private int currentStation;
     private int currentVolume;
+
+
+    public Radio() {
+        this.maxStation = 9;
+
+    }
+
+    public Radio(int stationsCount) {
+        this.maxStation = stationsCount - 1;
+
+    }
 
     public int getCurrentStation() {
         return currentStation;
     }
 
     public int getCurrentVolume() {
+
         return currentVolume;
     }
 
@@ -17,7 +31,7 @@ public class Radio {
         if (newCurrentStation < 0) {
             return;
         }
-        if (newCurrentStation > 9) {
+        if (newCurrentStation > maxStation) {
             return;
         }
         currentStation = newCurrentStation;
@@ -46,7 +60,7 @@ public class Radio {
     }
 
     public void nextStation() {
-        if (currentStation < 9) {
+        if (currentStation < maxStation) {
             currentStation = currentStation + 1;
         } else {
             currentStation = 0;
@@ -57,7 +71,7 @@ public class Radio {
         if (currentStation > 0) {
             currentStation = currentStation - 1;
         } else {
-            currentStation = 9;
+            currentStation = maxStation;
         }
     }
 }

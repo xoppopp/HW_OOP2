@@ -54,12 +54,34 @@ public class RadioTest {
     }
 
     @Test
+    public void shouldNotSetVolumeAboveMax() {
+        Radio radio = new Radio();
+        radio.setCurrentVolume(101);
+
+        int expectedVolume = 0;
+        int actualVolume = radio.getCurrentVolume();
+
+        Assertions.assertEquals(expectedVolume, actualVolume);
+    }
+
+    @Test
+    public void shouldNotSetVolumeBelowMin() {
+        Radio radio = new Radio();
+        radio.setCurrentVolume(-1);
+
+        int expectedVolume = 0;
+        int actualVolume = radio.getCurrentVolume();
+
+        Assertions.assertEquals(expectedVolume, actualVolume);
+    }
+
+    @Test
     public void shouldSetNextStation() {
         Radio radio = new Radio();
-        radio.setCurrentStation(1);
+        radio.setCurrentStation(8);
         radio.nextStation();
 
-        int expectedStation = 2;
+        int expectedStation = 9;
         int actualStation = radio.getCurrentStation();
 
         Assertions.assertEquals(expectedStation, actualStation);
@@ -68,17 +90,17 @@ public class RadioTest {
     @Test
     public void shouldSetPrevStation() {
         Radio radio = new Radio();
-        radio.setCurrentStation(1);
+        radio.setCurrentStation(2);
         radio.prevStation();
 
-        int expectedStation = 0;
+        int expectedStation = 1;
         int actualStation = radio.getCurrentStation();
 
         Assertions.assertEquals(expectedStation, actualStation);
     }
 
     @Test
-    public void shouldSetNextStationTo0() {
+    public void shouldSetNextStationToMin() {
         Radio radio = new Radio();
         radio.setCurrentStation(9);
         radio.nextStation();
@@ -90,7 +112,7 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldSetPrevStationTo9() {
+    public void shouldSetPrevStationToMax() {
         Radio radio = new Radio();
         radio.setCurrentStation(0);
         radio.prevStation();
@@ -99,6 +121,17 @@ public class RadioTest {
         int actualStation = radio.getCurrentStation();
 
         Assertions.assertEquals(expectedStation, actualStation);
+    }
+
+
+    @Test
+    public void shouldSetStation() {
+        Radio radio = new Radio();
+
+        radio.setCurrentStation(5);
+
+        Assertions.assertEquals(5, radio.getCurrentStation());
+
     }
 
     @Test
@@ -123,25 +156,90 @@ public class RadioTest {
         Assertions.assertEquals(expectedStation, actualStation);
     }
 
+
+    // Количество станций изменено
+
+
     @Test
-    public void shouldNotSetVolumeAboveMax() {
-        Radio radio = new Radio();
-        radio.setCurrentVolume(101);
+    public void shouldSetNextStationWithDifferentStationsCount() {
+        Radio radio = new Radio(20);
+        radio.setCurrentStation(18);
+        radio.nextStation();
 
-        int expectedVolume = 0;
-        int actualVolume = radio.getCurrentVolume();
+        int expectedStation = 19;
+        int actualStation = radio.getCurrentStation();
 
-        Assertions.assertEquals(expectedVolume, actualVolume);
+        Assertions.assertEquals(expectedStation, actualStation);
     }
 
     @Test
-    public void shouldNotSetVolumeBelowMin() {
-        Radio radio = new Radio();
-        radio.setCurrentVolume(-1);
+    public void shouldSetPrevStationWithDifferentStationsCount() {
+        Radio radio = new Radio(20);
+        radio.setCurrentStation(12);
+        radio.prevStation();
 
-        int expectedVolume = 0;
-        int actualVolume = radio.getCurrentVolume();
+        int expectedStation = 11;
+        int actualStation = radio.getCurrentStation();
 
-        Assertions.assertEquals(expectedVolume, actualVolume);
+        Assertions.assertEquals(expectedStation, actualStation);
     }
+
+    @Test
+    public void shouldSetNextStationToMinWithDifferentStationsCount() {
+        Radio radio = new Radio(20);
+        radio.setCurrentStation(19);
+        radio.nextStation();
+
+        int expectedStation = 0;
+        int actualStation = radio.getCurrentStation();
+
+        Assertions.assertEquals(expectedStation, actualStation);
+    }
+
+    @Test
+    public void shouldSetPrevStationToMaxWithDifferentStationsCount() {
+        Radio radio = new Radio(20);
+        radio.setCurrentStation(0);
+        radio.prevStation();
+
+        int expectedStation = 19;
+        int actualStation = radio.getCurrentStation();
+
+        Assertions.assertEquals(expectedStation, actualStation);
+    }
+
+
+    @Test
+    public void shouldSetStationWithDifferentStationsCount() {
+        Radio radio = new Radio(20);
+
+        radio.setCurrentStation(15);
+
+        Assertions.assertEquals(15, radio.getCurrentStation());
+
+    }
+
+    @Test
+    public void shouldNotSetStationAboveMaxWithDifferentStationsCount() {
+        Radio radio = new Radio(20);
+        radio.setCurrentStation(20);
+
+        int expectedStation = 0;
+        int actualStation = radio.getCurrentStation();
+
+        Assertions.assertEquals(expectedStation, actualStation);
+    }
+
+    @Test
+    public void shouldNotSetStationBelowMinWithDifferentStationsCount() {
+        Radio radio = new Radio(20);
+        radio.setCurrentStation(-1);
+
+        int expectedStation = 0;
+        int actualStation = radio.getCurrentStation();
+
+        Assertions.assertEquals(expectedStation, actualStation);
+    }
+
+
 }
